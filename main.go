@@ -68,6 +68,11 @@ func main() {
 		log.Fatal(err)
 	}
 
+	_, err = db.Exec("CREATE TABLE sequence (id INT NOT NULL)")
+	if err == nil {
+		db.Exec("INSERT INTO sequence VALUES (0)")
+	}
+
 	socket, err := net.Listen("tcp", ":8000")
 	if err != nil {
 		log.Fatal(err)
