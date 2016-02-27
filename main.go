@@ -64,6 +64,10 @@ func main() {
 	}
 	defer db.Close()
 
+	if err = db.Ping(); err != nil {
+		log.Fatal(err)
+	}
+
 	socket, err := net.Listen("tcp", ":8000")
 	if err != nil {
 		log.Fatal(err)
