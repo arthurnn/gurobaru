@@ -15,6 +15,9 @@ var db *sql.DB
 func FetchId() int64 {
 
 	res, err := db.Exec("UPDATE sequence SET id=LAST_INSERT_ID(id+1)")
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	id, err := res.LastInsertId()
 
