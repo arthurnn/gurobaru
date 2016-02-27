@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"io"
 	"bufio"
 	"strconv"
@@ -52,8 +53,12 @@ func handleRequest(conn net.Conn) {
 
 func main() {
 	var err error
+	user := flag.String("user", "root", "MySQL user")
+	password := flag.String("password", "", "MySQL password")
+	db_name := flag.String("database", "test", "MySQL database name")
+	flag.Parse()
 
-	db, err = sql.Open("mysql", "root@/test")
+	db, err = sql.Open("mysql", *user+"@"+*password+"/"+*db_name)
 	if err != nil {
 		log.Fatal(err)
 	}
