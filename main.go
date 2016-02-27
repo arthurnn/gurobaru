@@ -56,9 +56,12 @@ func main() {
 	user := flag.String("user", "root", "MySQL user")
 	password := flag.String("password", "", "MySQL password")
 	db_name := flag.String("database", "test", "MySQL database name")
+	host := flag.String("host", "127.0.0.1", "MySQL host")
+	port := flag.String("port", "3306", "MySQL port")
 	flag.Parse()
+	hostport := net.JoinHostPort(*host, *port)
 
-	db, err = sql.Open("mysql", *user+"@"+*password+"/"+*db_name)
+	db, err = sql.Open("mysql", *user+":"+*password+"@tcp("+hostport+")/"+*db_name)
 	if err != nil {
 		log.Fatal(err)
 	}
