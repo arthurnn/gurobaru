@@ -16,7 +16,7 @@ Run the server:
 
 Test it out
 ```
-echo "" | nc localhost 8000
+echo "FETCH ID" | nc localhost 8000
 ```
 
 Or go to: http://localhost:8000
