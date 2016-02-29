@@ -19,10 +19,10 @@ func main() {
 		client.WriteString("FETCH ID\n")
 		client.Flush()
 
-		cmd, err := client.ReadString('\n')
+		_, err := client.ReadString('\n')
 		if err != nil {
 			log.Fatal(err)
 		}
-		log.Print(cmd)
+		//log.Print(cmd)
 	}
 }
