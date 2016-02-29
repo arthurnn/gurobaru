@@ -22,7 +22,7 @@ func FetchId() int64 {
 
 	id, err := res.LastInsertId()
 
-	log.Println("POP", id)
+	// log.Println("POP", id)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -36,7 +36,7 @@ func handleRequest(conn net.Conn) {
 	cmd, err := client.ReadString('\n')
 
 	for err == nil || err == io.EOF {
-		log.Print(strconv.QuoteToASCII(cmd))
+		// log.Print(strconv.QuoteToASCII(cmd))
 		switch cmd {
 		case "GET / HTTP/1.1\r\n", "FETCH ID\r\n", "FETCH ID\n", "FETCH ID" :
 			id := FetchId()
