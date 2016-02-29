@@ -34,20 +34,34 @@ func handleRequest(conn net.Conn) {
 	defer conn.Close()
 
 	cmd, err := client.ReadString('\n')
-	// handle http requests
-	for err == nil && cmd != "\r\n" {
+
+	for err == nil || err == io.EOF {
 		log.Print(strconv.QuoteToASCII(cmd))
+		switch cmd {
+		case "GET / HTTP/1.1\r\n", "FETCH ID\r\n", "FETCH ID\n", "FETCH ID" :
+			id := FetchId()
+			client.WriteString(strconv.FormatInt(id, 10))
+			client.WriteString("\n")
+			client.Flush()
+		case "\r\n":
+			return
+		}
 		cmd, err = client.ReadString('\n')
+		if err == io.EOF {
+			return
+		}
+	}
+
+	if err == io.EOF {
+		log.Print("EOF")
+		log.Print(cmd)
 	}
 
 	if err != nil && err != io.EOF {
 		log.Fatal("Error reading buffer:", err.Error())
 	}
 
-	id := FetchId()
 
-	client.WriteString(strconv.FormatInt(id, 10))
-	client.Flush()
 	return
 }
 
