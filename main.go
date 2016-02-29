@@ -52,11 +52,6 @@ func handleRequest(conn net.Conn) {
 		}
 	}
 
-	if err == io.EOF {
-		log.Print("EOF")
-		log.Print(cmd)
-	}
-
 	if err != nil && err != io.EOF {
 		log.Fatal("Error reading buffer:", err.Error())
 	}
