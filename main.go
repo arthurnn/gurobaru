@@ -1,14 +1,14 @@
 package main
 
 import (
-	"flag"
-	"io"
 	"bufio"
-	"strconv"
+	"database/sql"
+	"flag"
+	_ "github.com/go-sql-driver/mysql"
+	"io"
 	"log"
 	"net"
-	"database/sql"
-	_ "github.com/go-sql-driver/mysql"
+	"strconv"
 )
 
 var db *sql.DB
@@ -38,7 +38,7 @@ func handleRequest(conn net.Conn) {
 	for err == nil || err == io.EOF {
 		// log.Print(strconv.QuoteToASCII(cmd))
 		switch cmd {
-		case "GET / HTTP/1.1\r\n", "FETCH ID\r\n", "FETCH ID\n", "FETCH ID" :
+		case "GET / HTTP/1.1\r\n", "FETCH ID\r\n", "FETCH ID\n", "FETCH ID":
 			id := FetchId()
 			client.WriteString(strconv.FormatInt(id, 10))
 			client.WriteString("\n")
@@ -55,7 +55,6 @@ func handleRequest(conn net.Conn) {
 	if err != nil && err != io.EOF {
 		log.Fatal("Error reading buffer:", err.Error())
 	}
-
 
 	return
 }
